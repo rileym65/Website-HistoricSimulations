@@ -1,0 +1,469 @@
+<html>
+<head>
+  <title>Setting up the High-Speed Multiplier</title>
+</head>
+
+<body bgcolor=white text=black>
+<h3>Setting up the High-Speed Multiplier</h3>
+<p>
+ENIAC's High-Speed Multiplier works by coordinating the action of from 4 to 6 of the accumulators.<br>
+In order for the Multiplier to work correctly it must be proplerly connected to these accumulators.
+<p>
+Here are the accumulators that the Multiplier needs to be connected to:
+<p>
+<table cols=2 border=0 cellspacing=5>
+  <tr>
+    <th>Accumulator</th>
+    <th align=left>Function</th>
+  </tr>
+  <tr>
+    <td><center>9</center></td>
+    <td>Multiplier</td>
+  </tr>
+  <tr>
+    <td><center>10</center></td>
+    <td>Multiplicand</td>
+  </tr>
+  <tr>
+    <td><center>11</center></td>
+    <td>Left Hand Partial Product I</td>
+  </tr>
+  <tr>
+    <td><center>12</center></td>
+    <td>Left Hand Partial Product II (Used for 20 digit answers)</td>
+  </tr>
+  <tr>
+    <td><center>13</center></td>
+    <td>Right Hand Partial Product I</td>
+  </tr>
+  <tr>
+    <td><center>14</center></td>
+    <td>Right Hand Partial Product II (Used for 20 digit answers)</td>
+  </tr>
+</table>
+<p>
+In this tutorial you will learn all the connections that need to be made for setting up the<br>
+Multiplier unit.
+<p>
+We will start by setting up the Multiplier recieve pulses
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>Start off by selecting the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Multiplier_Panel1.jpg"></td>
+    <td>Be sure that <b>Panel 1</b> is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this panel</td>
+  </tr>
+</table>
+<p>
+Set the R alpha through R epsilon outputs to <b>P5-A:1</b> through <b>P5-A:5</b>
+<p>
+<img src="Images/MultiplierIer.jpg">
+<p>
+Now we need to connect these pulses to the multiplier accumulator (9).
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator9.jpg"></td>
+    <td>Select accumulator <b>9</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this panel</td>
+  </tr>
+</table>
+<p>
+Set I1 through I4 to <b>P5-A:1</b> through <b>P5-A:4</b>
+<p>
+<img src="Images/tutorial5_9_inputs1234.jpg">
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P5-A5.jpg"></td>
+    <td>Set the input of program 5 to <b>P5-A:5<b></td>
+  </tr>
+</table>
+<p>
+Set the program modes for programs 1 through 4 to <b>alpha</b> through <b>delta</b>
+<p>
+<img src="Images/tutorial5_Prog1234.jpg">
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog5_epsilon_0.jpg"></td>
+    <td>Set the mode of program 5 to <b>epsilon</b></td>
+  </tr>
+</table>
+<p>
+Next we need to connect the Multiplicand receiver pulses
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>Switch back to the <b>Multiplier</b> tab</td>
+  </tr>
+</table>
+<p>
+Set the D alpha through D epsilon outputs to <b>P5-A:6</b> through <b>P5-A:10</b>
+<p>
+<img src="Images/MultiplierIcand.jpg">
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator10.jpg"></td>
+    <td>Select accumulator <b>10</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this panel</td>
+  </tr>
+</table>
+<p>
+Set I1 through I4 to <b>P5-A:6</b> through <b>P5-A:9</b>
+<p>
+<img src="Images/tutorial5_10_inputs_1234.jpg">
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P5-A10.jpg"></td>
+    <td>Set the input of program 5 to <b>P5-A:10<b></td>
+  </tr>
+</table>
+<p>
+Set the program modes for programs 1 through 4 to <b>alpha</b> through <b>delta</b>
+<p>
+<img src="Images/tutorial5_Prog1234.jpg">
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog5_epsilon_0.jpg"></td>
+    <td>Set the mode of program 5 to <b>epsilon</b></td>
+  </tr>
+</table>
+<p>
+Next we need to setup the product disposal pulses:
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>Switch back to the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Multiplier_Panel3.jpg"></td>
+    <td>Select <b>Panel 3</b></td>
+  </tr>
+</table>
+<p>
+Set the A through ASC outputs to <b>P5-B:4</b> through <b>P5-B:9</b>
+<p>
+<img src="Images/Tutorial5_A_ASC.jpg">
+<p>
+Now we need to set the final product accumulator (13) to receive these pulses
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator13.jpg"></td>
+    <td>Select accumulator <b>13</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this panel</td>
+  </tr>
+</table>
+<p>
+Set the inputs to programs 5 through 10 to <b>P5-B:4</b> through <b>P5-B:9</b>
+<p>
+<img src="Images/Tutorial5_Acc13_disposal.jpg">
+<p>
+And configure programs 5 through 10 as shown below
+<p>
+<img src="Images/Tutorial5_13_programs5_10.jpg">
+<p>
+Next we to connect the pulses that are used during sign correction
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>select the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Multiplier_RS_P5-B1.jpg"></td>
+    <td>Set the RS program output to <b>P5-B:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator9.jpg"></td>
+    <td>This connects to the multiplier accumulator, so select accumulator <b>9</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO6_input_P5-B1.jpg"></td>
+    <td>Connect the input for program 6 to <b>P5-B:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog6_S_0.jpg"></td>
+    <td>Configure program 6 to mode <b>S</b> and set the Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator11.jpg"></td>
+    <td>LHPP I receives this value, so select accumulator <b>11</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P5-B1.jpg"></td>
+    <td>Set the input of program 1 to <b>P5-B:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog1_beta_0.jpg"></td>
+    <td>Configure program 1 to mode <b>beta</b> and set the Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>Switch back to the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/DS_P5-B2.jpg"></td>
+    <td>Set the DS program output to <b>P5-B:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator10.jpg"></td>
+    <td>This connects to the multiplicand accumulator, so select accumulator <b>10</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO6_input_P5-B2.jpg"></td>
+    <td>Connect the input for program 6 to <b>P5-B:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog6_S_0.jpg"></td>
+    <td>Configure program 6 to mode <b>S</b> and set the Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator13.jpg"></td>
+    <td>RHPP I receives this value, so select accumulator <b>13</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P5-B2.jpg"></td>
+    <td>Set the input of program 1 to <b>P5-B:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog1_beta_0.jpg"></td>
+    <td>Configure program 1 to mode <b>beta</b> and set the Clear/Correct switch to <b>0</b></td>
+  </tr>
+</table>
+<p>
+The last program pulse we need to setup is the pulse used to combine the left and right partial<br>
+products into the final product
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>select the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/F_P5-B3.jpg"></td>
+    <td>Set the F program output to <b>P5-B:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator11.jpg"></td>
+    <td>LHPP will be sending its value, so select accumulator <b>11</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/I2_P5-B3.jpg"></td>
+    <td>Set the program input for program 2 to <b>P5-B:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog2_A_C.jpg"></td>
+    <td>Configure program 2 to use mode <b>A</b> and set the Clear/Correct switch to <b>C</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator13.jpg"></td>
+    <td>RHPP will be receiving this value, so select accumulator <b>13</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/I2_P5-B3.jpg"></td>
+    <td>Set the program input for program 2 to <b>P5-B:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog2_gamma_0.jpg"></td>
+    <td>Configure program 2 to use mode <b>gamma</b> and set the Clear/Correct switch to <b>0</b></td>
+  </tr>
+</table>
+<p>
+This takes care of all the program pulse connections.  Now we need to connect all the digit paths
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>select the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/LHPP_I_D5-A.jpg"></td>
+    <td>Set the LHPP I digit output to <b>D5-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/RHPP_I_D5-C.jpg"></td>
+    <td>Set the RHPP I digit output to <b>D5-C</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>Now we will work on the accumulators, select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator9.jpg"></td>
+    <td>Start by selecting accumulator <b>9</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/S_D5-A.jpg"></td>
+    <td>Set the S digit output port to <b>D5-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator10.jpg"></td>
+    <td>Next will be accumulator <b>10</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/S_D5-B.jpg"></td>
+    <td>Set the S digit output port to <b>D5-B</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator11.jpg"></td>
+    <td>Next will be accumulator <b>11</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D5-A.jpg"></td>
+    <td>Set the alpha digit input port to <b>D5-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Beta_D5-A.jpg"></td>
+    <td>Set the beta digit input port to <b>D5-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D5-A.jpg"></td>
+    <td>Set the A digit output port to <b>D5-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator13.jpg"></td>
+    <td>And finally accumulator <b>13</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D5-C.jpg"></td>
+    <td>Set the alpha digit input port to <b>D5-C</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Beta_D5-B.jpg"></td>
+    <td>Set the beta digit input port to <b>D5-B</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Gamma_D5-A.jpg"></td>
+    <td>Set the gamma digit input port to <b>D5-A</b></td>
+  </tr>
+</table>
+<p>
+At this point the High-Speed Multiplier is setup to produce 10 digit products.  In order to produce<br>
+20 digit products, some additional steps are required
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MultiplierTab.jpg"></td>
+    <td>select the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/LHPP_II_D5-B.jpg"></td>
+    <td>Set the LHPP II digit output to <b>D5-B</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/RHPP_II_D5-D.jpg"></td>
+    <td>Set the RHPP II digit output to <b>D5-D</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>Now we will work on the accumulators, select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator11.jpg"></td>
+    <td>Start by selecting accumulator <b>11</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Right_12.jpg"></td>
+    <td>Set the right accumulator association to <b>12</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator12.jpg"></td>
+    <td>Select accumulator <b>12</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D5-B.jpg"></td>
+    <td>Set the alpha digit input port to <b>D5-B</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D5-B.jpg"></td>
+    <td>Set the A digit output port to <b>D5-B</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator13.jpg"></td>
+    <td>Select accumulator <b>13</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Right_14.jpg"></td>
+    <td>Set the right accumulator association to <b>14</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator14.jpg"></td>
+    <td>Select accumulator <b>14</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D5-D.jpg"></td>
+    <td>Set the alpha digit input port to <b>D5-D</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Gamma_D5-B.jpg"></td>
+    <td>Set the gamma digit input port to <b>D5-B</b></td>
+  </tr>
+</table>
+<p>
+Now the High-Speed Multiplier is fully configured for producing up to 20 digit products.
+<p>
+Considering how much work it is to setup the Multiplier, it is probably a good idea to save your<br>
+setup so that you can use it as a starting point for setups that will use the Multiplier.
+<p>
+In the next tutorial we will look at how to acutally use the Multiplier to multiply numbers.
+</body>
+</html>

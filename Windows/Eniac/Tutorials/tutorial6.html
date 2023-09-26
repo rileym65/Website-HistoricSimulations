@@ -1,0 +1,323 @@
+<html>
+<head>
+  <title>Tutorial: Using the High-Speed Multiplier</title>
+</head>
+
+<body bgcolor=white text=black>
+
+<h3><b>Using the High-Speed Multiplier</b></h3>
+<p>
+In the last tutorial we setup the High-Speed Multiplier for use, now we will actually use it to<br>
+multiply some numbers.  Up until now we have used the Constant Transmitter to provide our values<br>
+that we have been using in past tutorials.  In this tutorial I am going to also introduce how to<br>
+use the Card Reader to provide values for your setups.
+<p>
+Be sure to start this tutorial using the saved setup from the last tutorial.  This tutorial assumes<br>
+that the High-Speed Multiplier is already properly connected.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>First be sure you have the <b>Init</b> tab slected on the simulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Reader_output_P1-A2.jpg"></td>
+    <td>Set the output of the Reader to <b>P1-A:2</b></td>
+  </tr>
+</table>
+<p>
+We will be using the <b>Start</b> button to start this setup rather than the <b>Go</b> button that<br>
+we have been using in the past. When using the <b>Start</b> button the first action of ENIAC is to<br>
+read a card and then once the read is complete to send a pulse on the Reader ouptut.
+<p>
+We are going to allow this setup to process multiple cards, so will instruct ENIAC to read the next<br>
+card immediately upon completion of the first read.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Reader_input_P1-A2_output_P1-A2.jpg"></td>
+    <td>Set the input of the Reader to <b>P1-A:2</b></td>
+  </tr>
+</table>
+<p>
+At this point you might be wondering why we immediatly begin reading the next card before processing<br>
+the first card.  The reason we can do this is because ENIAC takes quite a bit of time to actually<br>
+read a card.  While ENIAC is reading the next card we can do the remainder of the work and therefore<br>
+wait a little bit less time during the next loop.  In order to prevent the reader from sending its<br>
+output pulse too early there is an interlock input to prevent the Reader from outputting a pulse<br>
+until the interlock has received a pulse.  If the Reader finishes before it receives the interlock<br>
+pulse, then it just waits until it receives the pulse before sending the next output pulse.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Reader_IL_P1-A1.jpg"></td>
+    <td>Set the Reader Interlock to <b>P1-A:1</b></td>
+  </tr>
+</table>
+<p>
+Now lets go and put some cards in the reader
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/ReaderTab.jpg"></td>
+    <td>Select the <b>Reader</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to the card reader</td>
+  </tr>
+</table>
+<p>
+Enter the following two cards into the Card Input Hopper:
+<p>
+<img src="Images/Tutorial6_cards.jpg">
+<p>
+In past tutorials we have punched cards, but I have not really gone over the format itself on punched<br>
+cards.  A punched card contains 80 columns, divided into 8 fields of 10 digits, or more precisely<br>
+16 fields of 5 digits each.  When a card is read, each group of 10 digits is placed into one of the<br>
+Constant Tramistter registers, Registers A through H.  The + and - signs that appear on cards on the<br>
+original ENIAC were over-punches that occured on one of the digits in the field, it did not matter<br>
+which character the overpunches occured on, so for example, all of these are valid ways to punch<br>
+-123:
+<p>
+<ul>
+  <li>-0000000123
+  <li>0000000-123
+  <li>000000012-3
+</ul>
+Note that 0000000123- is not a valid way to punch -123 since the - sign will belong to the next field,<br>
+leaving the number as +123.  If no sign appears at all in the field, the resulting number is positive.<br>
+Each of the two 5 digit numbers in each field can have its own sign.  For example:
+<p>
++00123-00123
+<p>
+If no sign appears in the second half of a 10 digit group, then the sign of the second half will be<br>
+the same as the first half. For example:
+<p>
+-0012300456
+<p>
+Would be -123 and -456.
+<p>
+Here is the format indicating how each digit is placed into the Constant Transmitter registers:
+<p>
++AAAAA+AAAAA+BBBBB+BBBBB+CCCCC+CCCCC+DDDDD+DDDDD+EEEEE+EEEEE+FFFFF+FFFFF+GGGGG+GGGGG+HHHHH+HHHHH
+<p>
+Now, lets get back to creating our setup. When we left off, after a card was read the Card Reader<br>
+sent a P1-A:2 pulse. We now need to act on that pulse.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Select the <b>Const1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to the Constant Transmitter</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO1_input_P1-A2.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Const_Prog1_LR_A.jpg"></td>
+    <td>Configure program 1 by setting its mode to <b>LR</b> and to send register <b>A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>Set the digit output of the Constant Transmitter to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now we need to configure accumulator 1 to receive the first number
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator1.jpg"></td>
+    <td>Select accumulator <b>1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P1-A2.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccProg1_alpha_0.jpg"></td>
+    <td>Configure program 1 by setting its mode to <b>alpha</b> and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Set the alpha digit input port to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now we need to retrieve the second value into accumulator 2
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Select the <b>Const1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO1_input_P1-A2_output_P1-A3.jpg"></td>
+    <td>Set the output for program 1 to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO2_input_P1-A3.jpg"></td>
+    <td>Set the input for program 2 to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Const_Prog2_LR_B.jpg"></td>
+    <td>Configure program 2 by setting its mode to <b>LR</b> and to send register <b>B</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator2.jpg"></td>
+    <td>Select accumulator <b>2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P1-A3.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccProg1_alpha_0.jpg"></td>
+    <td>Configure program 1 by setting its mode to <b>alpha</b> and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Set the alpha digit input port to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now that we have the numbers to multiply, we can trigger the multiply action
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Select the <b>Const1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO2_input_P1-A3_output_P1-A4.jpg"></td>
+    <td>Set the output for program 2 to <b>P1-A:4</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/MultiplierTab.jpg"></td>
+    <td>Select the <b>Multiplier</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO1_input_P1-A4.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-A:4</b></td>
+  </tr>
+</table>
+<p>
+Next we have to configure all the parameters of the multiplier program
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Ier1_alpha_C.jpg"></td>
+    <td>Configure the Ier1 selector to <b>alpha</b> and the Ier Clear switch to <b>C</b></td>
+  </tr>
+</table>
+<p>
+The purpose of the Ier control switches is to control how the multiplier accumulator (9) receives its<br>
+argument.  When the mode switch is set at any of the values from alpha to epsilon, a pulse will be<br>
+sent on the R alpha through R epsilon outputs corresponding to the mode setting.  In the case above,<br>
+mode alpha is selected, so a pulse will be sent out the R alpha program output, which is connected<br>
+to a program on accumulator 9 setup to receive on the alpha channel.  The Ier Clear switch specifies<br>
+what will happen to the accumulator once multiplication is complete.  If the switch is set to C then<br>
+the accumulator will be cleared to zeroes upon completion, otherwise it will be left intact.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Icand1_beta_C.jpg"></td>
+    <td>Configure the Icand1 selector to <b>beta</b> and the Ier Clear switch to <b>C</b></td>
+  </tr>
+</table>
+<p>
+The Icand control switches work just like the Ier control switches, except they control the multiplicand<br>
+accumulator (10).  Also, the pulse receive pulse will be sent on the D alpha through D epsilon program<br>
+output.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Figures1_Off.jpg"></td>
+    <td>Set the Figures 1 control switch to <b>Off</b></td>
+  </tr>
+</table>
+<p>
+The figures control switch controls round-off in the answer.  Since we are producing a full 20 digit<br>
+product, we do not want round off to occur.  Normally if this switch is set from 2 through 10 it will<br>
+place a 5 in the digit position one greater than the setting of the switch.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Places1_10.jpg"></td>
+    <td>Set the Places 1 switch to <b>10</b></td>
+  </tr>
+</table>
+<p>
+The Places switch specifies how many digits (counting from the left) of the multiplier (accumulator 9)<br>
+are used for the multiplication.  All 10 digits of the multiplicand (accumulator 10) are always used.<br>
+For example: If the multiplier accumulator held +1257500000 and the Places switch was set to 3 then<br>
+then all 10 digits of the multiplicand will be multipled by just .125.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Product1_AC.jpg"></td>
+    <td>Set the Product 1 switch to <b>AC</b></td>
+  </tr>
+</table>
+<p>
+This final program setting switch controlls the final product accumulators (13 and 14) and specifies<bR>
+what they are to do when multiplication is complete. The setting of this switch specifies which of the<br>
+A through ASC program outputs on panel 3 will be pulsed when multiplication is done.  Normally these<br>
+are connected to the product accumulator (13) and activate send programs to send the final product<br>
+to another destionation.
+<p>
+This completes the setup of the multiplication program.  Now we need to set accumulators 1 and 2, which<br>
+hold the values we read from the card, to send their values to the multiplier and multiplicand <br>
+accumulators at the same time as when the Multiplier Unit is triggered
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator1.jpg"></td>
+    <td>Select accumulator <b>1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I2_P1-A4.jpg"></td>
+    <td>Set the input for program 2 to <b>P1-A:4</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog2_A_0.jpg"></td>
+    <td>Configure program 2 by setting its mode to <b>A</b> and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>Set the alpha digit input port to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+
+</body>
+</html>

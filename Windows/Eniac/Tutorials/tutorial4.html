@@ -1,0 +1,358 @@
+<html>
+<head>
+  <title>Reading values from the Funtion Tables</title>
+</head>
+
+<body bgcolor=white text=black>
+<h3>Reading values from the Funtion Tables</h3>
+<p>
+The ENIAC function tables are kind of odd beasts, in that some the function is not exactly<br>
+in sync with other ENIAC units.  For example, whereas ENIAC uses 10 digit numbers everywhere,<br>
+the function tables store 12 digit numbers, split into two 6 digit halves.  In this tuturial<br>
+we will build a setup to read a 10 digit value from a Function Table.  As always, be sure to<br>
+start this setup from a clean setup.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>First be sure you have the <b>Init</b> tab selected on the simulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/InitPulse_P1-A1.jpg"></td>
+    <td>Connect the Init Pulse to <b>P1-A:1</b></td>
+  </tr>
+</table>
+<p>
+In this setup we are going to assume the Function Table holds a table of sine values, although<br>
+we are only going to enter a single number for demonstration sake.  The first step we need to<br>
+do is setup the Constant Transmitter to provide the argument for the function table.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Select the <b>Const1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Be sure the power to this panel is <b>On</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO9_input_P1-B1.jpg"></td>
+    <td>Set the input for program 9 to <b>P1-B1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Const_Prog9_LR_J.jpg"></td>
+    <td>Setup program 9 to send the full contents of register <b>J</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>Set the digit output to <b>D1-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Const2Tab.jpg"></td>
+    <td>Select the <b>Const2</b>tab</td>
+  </tr>
+</table>
+<p>
+And set the value of register J to 30
+<p>
+<img src="Images/regJ_30.jpg">
+<p>
+Now we are ready to setup the Function Table
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Function1Tab.jpg"></td>
+    <td>Select the <b>Function1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Table1.jpg"></td>
+    <td>Be sure that <b>Table 1</b> is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this panel</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO1_input_P1-A1.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-A:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Func_Prog1_Add0_NC.jpg"></td>
+    <td>Configure program 1 by setting its mode to <b>Add 0</b> and the select switch to <b>NC</b></td>
+  </tr>
+</table>
+<p>
+What we have done here is to set the Function Table to execute program 1 when it receives a P1-A:1<br>
+pulse.  We have also set it to provide a pulse on NC to stimulate another unit to transmit the<br>
+argument.  We have already setup the Constant Transmitter to send the argument, so all we need to<br>
+do is make the connections on the Function Table.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/NC_C_P1-B1.jpg"></td>
+    <td>The Constant Transmitter is expecting a pulse on P1-B1, so set the NC output to <b>P1-B:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/ArgIn_D1-A.jpg"></td>
+    <td>The Constant Transmitter is sending on D1-A, so set Arg IN to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now we need to setup the Function Table output
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Function2Tab.jpg"></td>
+    <td>Switch to the <b>Function 2</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>Set digit output port A to <b>D1-A</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/B_D1-B.jpg"></td>
+    <td>Set digit output port B to <b>D1-B</b></td>
+  </tr>
+</table>
+<p>
+Now we need to setup the actual value that will be looked up.  Normally the Portable Function Table<br>
+would be set for all possible values of the function, but for demonstration purposes we only need<br>
+the actual row corresponding with our argument, which is 30.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PortFuncTab.jpg"></td>
+    <td>Switch to the <b>PortFunc</b> tab</td>
+  </tr>
+</table>
+<p>
+The sine of 30 degrees is 0.422618261740699. So scroll down to entry number 30 and enter this value.
+<p>
+<img src="Images/Value_sine_30.jpg">
+<p>
+At this point the Function Table is all setup to look up our value, now we need to set up two<br>
+accumulators to recieve the two 6 digit numbers sent by the Function Table.  Here is where an<br>
+oddity of the Function Table appears, there is no signal provided by the Function Table that<br>
+signals an accumulator to receive the result.  The program output from the Function Table actually<br>
+occurs after the answer is transmitted!  Because of this we need to create a dummy program that<br>
+will trigger an accumulator to recieve 2 addition times after the argument is sent to the Function<br>
+Table.
+<p>
+Since the Constant Transmitter is sending the function argument, we will use it to start our 2<br>
+addition time delay.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Switch to the <b>Const1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO9_input_P1-B1_output_P1-B2.jpg"></td>
+    <td>Set the output of program 9 to <b>P1-B:2</b>This will trigger our 2 addition time delay</td>
+  </tr>
+</table>
+<p>
+Now to setup the dummy program on one of our accumulators.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Switch to the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator1.jpg"></td>
+    <td>Be sure that accumulator <b>1</b> is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO5_input_P1-B2.jpg"></td>
+    <td>Set the input for program 5 to <b>P1-B:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog5_0_0.jpg"></td>
+    <td>Configure program 5 to mode <b>0</b> and the Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Rep5_2.jpg"></td>
+    <td>Set the repeat for program 5 to <b>2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO5_input_P1-B2_output_P1-B3.jpg"></td>
+    <td>Set the output of program 5 to <b>P1-B:3</b></td>
+  </tr>
+</table>
+<p>
+That completes our dummy program.  A pulse will be sent on P1-B:3 when it is time to receive the<br>
+results from the Function Table.  Now we need to configure 2 accumulators to receive the results.<br>
+Starting with accumulator 1, which we are already on.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/IO6_input_P1-B3.jpg"></td>
+    <td>Set the input of program 6 to <b>P1-B:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog6_alpha_0.jpg"></td>
+    <td>Configure program 6 to mode <b>alpha</b> and set the Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Set the alpha input port to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now lets setup accumulator 2.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Accumulator2.jpg"></td>
+    <td>Be sure that accumulator <b>2</b> is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P1-B3.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-B:3</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccProg1_alpha_0.jpg"></td>
+    <td>Configure program 1 by setting its mode to <b>alpha</b> and Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-B.jpg"></td>
+    <td>Set digit input port alpha to <b>D1-B</b></td>
+  </tr>
+</table>
+<p>
+At this point we have recieved the value from the Function Table. Go ahead and run your setuip to<br>
+check to make sure everything is good up to this point.  You should have these two values in the<br>
+accumulators:
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200>Accumulator 1</td>
+    <td><img src="Images/Value_0000422618.jpg"></td>
+  </tr>
+  <tr>
+    <td width=200>Accumulator 2</td>
+    <td><img src="Images/Value_0000261740.jpg"></td>
+  </tr>
+</table>
+<p>
+Our answer is spread across two accumulators, now we need to combine the two subresults into our<br>
+final result.  The first step is to align the numbers so that they are not overlapping each other.<br>
+We will start by fixing the number in accumulator 1.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Accumulator1.jpg"></td>
+    <td>Be sure that accumulator <b>1</b> is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A_SHL4.jpg"></td>
+    <td>Since the first number has only 6 digits, 4 leading zeros, we will shift this number<br>
+        to the left 4 places.  Set the alpha filter to <b>SHL4</b></td>
+  </tr>
+</table>
+<p>
+Go ahead and run the setup again and take a look at the two accumulators.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200>Accumulator 1</td>
+    <td><img src="Images/Value_4226180000.jpg"></td>
+  </tr>
+  <tr>
+    <td width=200>Accumulator 2</td>
+    <td><img src="Images/Value_0000261740.jpg"></td>
+  </tr>
+</table>
+<p>
+The most significant digits are now properly alligned in accumulator 1, but we still have two<br>
+digits of overlap.  We will fix this by shifting the value in accumulator 2 to the right.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Accumulator2.jpg"></td>
+    <td>Be sure that accumulator <b>2</b> is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-B_SHR2.jpg"></td>
+    <td>Set the filther on the alpha digit port to <b>SHR2</b></td>
+  </tr>
+</table>
+<p>
+Go ahead and run the setup again and take a look at the two accumulators.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200>Accumulator 1</td>
+    <td><img src="Images/Value_4226180000.jpg"></td>
+  </tr>
+  <tr>
+    <td width=200>Accumulator 2</td>
+    <td><img src="Images/Value_0000002617.jpg"></td>
+  </tr>
+</table>
+<p>
+At this point all we have to do is add the two registers together.  We will use the output pulse<br>
+from the Function Table to trigger the final assembly of our answer.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Function1Tab.jpg"></td>
+    <td>Switch to the <b>Function 1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO1_input_P1-A1_output_P1-A2.jpg"></td>
+    <td>Set the output for program 1 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccTab.jpg"></td>
+    <td>Switch to the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator2.jpg"></td>
+    <td>Be sure that accumulator <b>2</b> is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/I2_P1-A2.jpg"></td>
+    <td>Set the program input for program 2 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog2_A_0.jpg"></td>
+    <td>Configure program 2 by setting its mode to <b>A</b> and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/A_D1-A.jpg"></td>
+    <td>Set digit output port A to <b>D1-A</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator1.jpg"></td>
+    <td>Now to configure Accumulator <b>1</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/I1_P1-A2.jpg"></td>
+    <td>Set the program input for program 1 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog1_beta_0.jpg"></td>
+    <td>Configure program 1 by setting its mode switch to <b>beta</b> and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Beta_D1-A.jpg"></td>
+    <td>Connect the beta digit input port to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Our setup is complete. Go ahead and run it and verify that you got the correct answer in accumulator 1:
+<p>
+<img src="Images/Value_4226182617.jpg">
+</body>
+</html>

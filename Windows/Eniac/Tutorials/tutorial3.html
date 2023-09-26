@@ -1,0 +1,271 @@
+<html>
+<head>
+  <title>Variable Loops</title>
+</head>
+
+<body bgcolor=white text=black>
+<h3>Variable Loops</h3>
+<p>
+In tutorial 2 we looked at how the Master Programmer could be used for creating fixed loops,<br>
+loops where the number of iterations is known at design time.  The drawback to using the Master<br>
+Programmer for controlling loops is that it can only control loops where the number of iterations<br>
+is known ahead of time.  If you need to deal with loops where the iteration count is variable or<br>
+unknown at design time then the Master Programmer cannot be used and a different method is needed.
+<p>
+This tutorial will show you a way to create loops where the iteration count is unknown until<br>
+runtime.  This technique uses an Accumulator to control the loop.  Be sure to start from a blank<br>
+setup.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>First be sure you have the <b>Init</b> tab selected on the simulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/InitPulse_P1-A1.jpg"></td>
+    <td>Connect the Init Pulse to <b>P1-A:1</b></td>
+  </tr>
+</table>
+<p>
+We will use the Constant Transmitter to provide our iteration count, so lets set it up.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Switch to the Constant Transmitter panel 1</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Be sure that the power to the panel is <b>On</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO9_input_P1-A1.jpg"></td>
+    <td>Set the input for program 9 to <b>P1-A:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Const_Prog9_LR_J.jpg"></td>
+    <td>Set program 9 to send all of register <b>J</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>Set the Constant Transmitter to send on <b>D1-A</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Const2Tab.jpg"></td>
+    <td>We are done with this panel for the moment, so switch to panel 2</td>
+  </tr>
+</table>
+<p>
+Set register J to -10 (10s compliment is needed here):
+<p>
+<img src="./Images/RegJ_-10.jpg">
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const_JL_M.jpg"></td>
+    <td>The sign of the J register needs to be set to <b>M<b>inus</td>
+  </tr>
+</table>
+<p>
+There is a good reason why we want our loop count to be negative.  ENIAC provides an easy way<br>
+to auto-increment an accumulator without any need for additional constants, but there is no<br>
+way to decrement an accumulator without having a -1 stored somewhere else.  By using a negative<br>
+loop count we can use the auto-increment capability to change our loop counter.
+<p>
+Now that the Constant Transmitter is sending the loop count, we need to configure an accumulator<br>
+to receive the count.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator3.jpg"></td>
+    <td>We will use accumulator 3 for our loop control, so select it</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Be sure that the power to the accumulator is <b>On</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P1-A1.jpg"></td>
+    <td>Set the input for program 1 to <b>P1-A:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccProg1_alpha_0.jpg"></td>
+    <td>Configure program 1 to receive on <b>alpha</b> and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Connect the alpha digit input to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now that our loop counter (accumulator 3) is setup to control the loop, it is time to setup what<br>
+happens in the loop itself.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>We need to trigger the beginning of the loop after the constant was loaded, so switch<br>
+        back to panel 1 of the Constant Transmitter</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO9_input_P1-A1_output_P1-B1.jpg"></td>
+    <td>Connect the output of program 9 to <b>P1-B:1</b></td>
+  </tr>
+</table>
+<p>
+We need to increment the loop counter during each iteration of the loop.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Back to the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator3.jpg"></td>
+    <td>Be sure that accumulator 3 is selected</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I2_P1-B1.jpg"></td>
+    <td>Connect the input of program 2 to <b>P1-B:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog2_beta_C.jpg"></td>
+    <td>Configure program 2 to mode <b>beta</b> and set the Clear/Correct switch to <b>C</b></td>
+  </tr>
+</table>
+<p>
+We used mode beta here for a reason, mainly because it is not connected to anything, thus<br>
+guaranteeing that we receive a zero during this step.  The Clear/Correct switch will increment<br>
+the accumulator by 1, which is all we need to happen here.
+<p>
+Now to add the counting and punching to our loop.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td><img src="Images/Accumulator1.jpg"></td>
+    <td>Select accumator <b>1</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO5_input_P1-B1.jpg"></td>
+    <td>Connect the input of program 5 to <b>P1-B:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Acc_Prog5_alpha_C.jpg"></td>
+    <td>Configure program 5 to mode <b>alpha</b> and the Clear/Correct switch to <b>C</b></td>
+  </tr>
+</table>
+<p>
+Now accumulator 1 will be increased by 1 at the same time that accumulator 3 is being incremented.<br>
+Next is to punch the current count.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/IO5_Input_P1-B1_output_P1-A2.jpg"></td>
+    <td>Connect the output of program 5 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/InitTab.jpg"></td>
+    <td>Switch to the <b>Init</b> tab, where the punch program ports are</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PunchIO_input_P1-A2.jpg"></td>
+    <td>Set the punch input to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PunchTab.jpg"></td>
+    <td>Switch to the <b>Punch</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to the panel</td>
+  </tr>
+</table>
+<p>
+Now we need to configure the punch so that it will only punch the counter numbers
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PrintTab.jpg"></td>
+    <td>Change to the <b>Print</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PrintPanel1.jpg"></td>
+    <td>Be sure that you are on <b>Panel 1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Print12_C.jpg"></td>
+    <td>Set the connection swith for groups 1-2 to <B>C</B><br>
+        All other groups should be set to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PrintPanel2.jpg"></td>
+    <td>Switch to <b>Panel 2</b></td>
+  </tr>
+</table>
+<p>
+Only print groups 1 and 2 should be set to <b>print</b>, set all the others to <b>Off</b>
+<p>
+<img src="Images/PrintGroups1_2.jpg">
+<p>
+Now that all the work in the loop is done, we need to trigger the loop controller (accumulator 3)<br>
+to close the loop and determine if another iteration is needed.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>Switch back to the <b>Init</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PunchIO_input_P1-A2_output_P1-A3.jpg"></td>
+    <td>Set the punch output to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Switch to the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator3.jpg"></td>
+    <td>Select accumulator <b>3</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/I3_input_P1-A3.jpg"></td>
+    <td>Set the input for program 3 to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog3_A_0.jpg"></td>
+    <td>Configure program 3 to mode <b>A</B> and the Clear/Correct switch set to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/A_P1-B.jpg"></td>
+    <td>Connect digit output port A to <b>P1-B</b></td>
+  </tr>
+</table>
+<p>
+That last step probably needs a little explanation since we are connecting a <b>digit</b> output<br>
+tray to a <b>program</b> tray.  The program trays also have connectors that allow a digit value<br>
+to be sent on the program trays, this mechanism allows you to make decisions.  P1-B:1 is connected<br>
+to the beginning of our loop, when we connected the A output of accumulator 3 to program tray B<br>
+we in essence are using the sign of the accumulator to trigger the next action, this is another<br>
+reason why we used a negative number.  When you send a negative number out the A port, wire 1<br>
+(P1-B:1 in our case) will recieve pulses that can trigger the next program step.  Once the number<br>
+is positive, no more pulses will appear on the P1-B:1 and our setup ends.
+<p>
+If you needed to perform additional work after this loop, you could connect the S output port to<br>
+another program tray (for example P1-C) and then use position 1 to trigger the next step.  To do<br>
+this you would also have to change the program mode of the output from A to AS.
+<p>
+Go ahead and run your setup, if all is connected properly you should see
+<p>
+<img src="Images/tutorial3_output.jpg">
+<p>
+on the punch output.
+</body>
+</html>

@@ -1,0 +1,669 @@
+<html>
+<head>
+  <title>Getting Started with ENIAC</title>
+</head>
+
+<body bgcolor=white text=black>
+<h3>Getting Started with ENIAC</h3>
+<p>
+Programming ENIAC is unlike any other computer you have ever programmed.  It does not understand<br>
+any form of machine language, nor any other language for that matter.  ENIAC is more akin to a cpu<br>
+that consists of multiple computational units which are not yet connected together.  It is up to<br>
+the programmer to configure each of these individual units and then tie them together to perform<br>
+the desired task.
+<p>
+In addition to the various computational units of ENIAC there are numerous "trays" that are used<br>
+to carry digit and program pulses from one unit to another.  These trays are anologous to what we<br>
+now call busses.  There are two different types of trays, digit and program trays.  Digit trays are<br>
+used to carry digit information from one ENIAC unit to another.  Program trays are used to carry<br>
+program pulses from one unit to another.  Each tray, whether digit or program, contains 11 wires<br>
+to carry information.  Digit trays consist of sockets spaced along the tray that allows the tray<br>
+to be connected to digit ports of the computational units.  Whereas program trays contain sockets<br>
+for connecting program signals to units.
+<p>
+Trays on the original ENIAC each tray spanned across four panels and then connectors at the ends<br>
+allowed trays to be connected so that signals can be carried across all of ENIAC's panels.  This<br>
+simulator handles the trays a bit differently and so no connections are needed to connect trays<br>
+together when a signal needs to be sent between panels that are far apart.  Digit trays have<br>
+8 sections of 5 trays each and program trays have 9 sections of 9 trays each.  There are more<br>
+than enough connection points for even the most complex of setups.
+<p>
+When connecting to a tray it is important to understand how the numbering on the trays works.<br>
+An example digit tray assignement would be D1-A.  The 'D' specifies that this is a digit tray.<br>
+The '1' specifies the tray is in section 1 and the 'A' specifies tray 'A'.  Another digit tray<br>
+example would be D5-E, which specifies this is a digit tray in section 5 and tray E.
+<p>
+Program trays use a similar format.  An example is P2-B:1.  The 'P' specifies that this is a<br>
+program tray, the '2' specifies this is in section 2, the 'B' specifies tray B, and the ':1'<br>
+specifies that the first connection is being used.  A program tray has connections from :1 to<br>
+:11.
+<p>
+<h3>Our First Setup</h3>
+<p>
+In this setup we will do the following tasks:
+<ul>
+  <li>Load a constant into accumulator 1
+  <li>Load a constant into accumulator 2
+  <li>Add 5 times the accumulator 2 to accumulator 1
+  <li>Subtract accumulator 1 from zero
+  <li>Punch our calculation results
+</ul>
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>First be sure you have the <b>Init</b> tab slected on the simulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/InitPulse_P1-A1.jpg"></td>
+    <td>Connect the Init Pulse to <b>P1-A:1</b></td>
+  </tr>
+</table>
+<p>
+What we have done here is to connect the <b>Go</b> button to a program tray.  All setups proceed<br>
+by sending program pulses from one unit to another to initiate the next step of the setup.  The<br>
+connection we have made above allows us to get the ball rolling.  When the <b>Go</b> button is <br>
+pressed the first program pulse will be sent on P1-A:1
+<p>
+Now we need to configure a unit to act upon this pulse.  We will start by configuring the constant<br>
+Transmitter to send a value with this pulse.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Select the Constant Transmitter <b>Const 1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to the Constant Transmitter</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO9_input_P1-A1.jpg"></td>
+    <td>Connect the input of program 9 to tray <b>P1-A:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Const_Prog9_LR_J.jpg"></td>
+    <td>Configure program 9 by setting its mode switch to <b>LR</b> and the register<br>
+        switch to <B>J</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>In order to send, the Constrant Transmitter must be connected to a digit tray.<br>
+        Connect it to <b>D1-A</b></td>
+  </tr>
+</table>
+At this point the Constant Transmitter will be listening for the P1-A:1 pulse sent by the <b>Go</b><br>
+button.  When this pulse is received program 9 will be triggered, which is to send all of register J<br>
+out the output port.  Now we need a value in register J to send.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const2Tab.jpg"></td>
+    <td>Select the <b>Const 2</b> tab</td>
+  </tr>
+</table>
+<p>
+Then set Register J to hold the value of <b>123</b>
+<p>
+<img src="Images/RegJ_123.jpg">
+<p>
+At this point the Constant Transmitter is all setup to send the value of 123 when the <B>Go</b> button<br>
+is pressed. Now we need to receive this number in an accumulator.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/Accumulator1.jpg"></td>
+    <td>And be sure that accumulator 1 is selectged</td>
+  </tr>
+  <tr>
+    <td><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/I1_P1-A1.jpg"></td>
+    <td>Connect the pulse input of program 1 to <b>P1-A:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccProg1_alpha_0.jpg"></td>
+    <td>Now configure program 1 by setting its mode switch to <b>alpha</b> and its<br>
+        Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Now we need to connect the alpha input channel to the same digit tray that<br>
+        the Constant Transmitter is sending on, <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+At this point the first task of our setup is complete.  We can go ahead and run this portion to be<br>
+sure that no mistakes have been made up til this point.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>Switch to the <b>Init</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/ClearButton.jpg"></td>
+    <td>Press the <b>Clear</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/GoButton.jpg"></td>
+    <td>Followed by the <b>Go</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Switch back to the <b>Acc</b> tab</td>
+  </tr>
+</table>
+<p>
+The accumulator display should now be showing the 123 that the Constant Transmitter sent
+<p>
+<img src="Images/Acc_disp_123.jpg">
+<p>
+If you got the correct result then you are ready to continue this tutorial, If you did not get this<br>
+answer then review what has been done up til this point.
+<p>
+<h3>The Second Task</h3>
+<p>
+The second task of our setup is to load a value into accumulator 2.  We will being this task on the<br>
+Constant Transmitter.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Start by selecting the <b>Const 1</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/IO9_input_P1-A1_output_P1-A2.jpg"></td>
+    <td>We first need to generate a pulse when program 9 of the Constant Transmitter finishes.<br>
+        Set the output portion of IO9 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO10_input_P1-A2.jpg"></td>
+    <td>Since we need to send another constant, we will trigger program 10 of the Constant<br>
+        transmitter.  Set the input of IO10 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Const_Prog10_LR_K.jpg"></td>
+    <td>Now configure program 10 to send the whole contents of register <b>K</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Const2Tab.jpg"></td>
+    <td>The next step is to set a value into register K.  Select the <b>Const 2<b> tab</td>
+  </tr>
+</table>
+<p>
+Set the value in register K to 456
+<p>
+<img src="Images/RegK_456.jpg">
+<p>
+At this point when the pulse P1-A:2 occurs, program 10 of the Constant Transmitter will execute, <br>
+sending the value of 456 from register K.  Now we need to configure accumulator 2 to receive it.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator2.jpg"></td>
+    <td>Select accumulator <b>2</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/I1_P1-A2.jpg"></td>
+    <td>Set the input signal of program 1 to <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/AccProg1_alpha_0.jpg"></td>
+    <td>Now configure program 1 by setting its mode switch to <b>alpha</b> and its<br>
+        Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Now we need to connect the alpha input channel to the same digit tray that<br>
+        the Constant Transmitter is sending on, <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Now task 2 of our setup is complete.  Lets go ahead and test it.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>Switch to the <b>Init</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/ClearButton.jpg"></td>
+    <td>Press the <b>Clear</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/GoButton.jpg"></td>
+    <td>Followed by the <b>Go</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Switch back to the <b>Acc</b> tab</td>
+  </tr>
+</table>
+<p>
+The accumulator display should now be showing the 456 that the Constant Transmitter sent
+<p>
+<img src="Images/Acc_disp_456.jpg">
+<p>
+Also check accumulator 1 and make sure it still shows 123.
+<p>
+If you do not have 123 in accumulator 1 and 456 in accumulator 2 then recheck your setup<br>
+and make sure that you have made all the connections above.  If you have the correct values<br>
+in both accumulators then you are ready to proceed to the third task.
+<p>
+<h3>The Third Task</h3>
+<p>
+Now on to the third task.  In this task we are going to add 5 times the value stored in<br>
+accumulator 2 to accumulator 1.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Const1Tab.jpg"></td>
+    <td>Start by selecting the <b>Const 1</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO10_input_P1-A2_output_P1-A3.jpg"></td>
+    <td>We need to trigger the next step of our setup.  We will use the<br>
+        output side of program 10 on the Constant Transmitter to trigger<br>
+        the next step of our setup.  Set the output pulse to <b>P1-A:3</b></td>
+  </tr>
+</table>
+<p>
+Now we will configure accumulator 2 to send its contents 5 times.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator2.jpg"></td>
+    <td>Be sure that accumulator <b>2</b> is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P1-A3.jpg"></td>
+    <td>Set the input for program 5 to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog5_A_0.jpg"></td>
+    <td>Configure program 5 by setting its mode to <b>A</b> and<br>
+        its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Rep5_5.jpg"></td>
+    <td>Set the repeat program control for program 5 to <b>5</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/A_D1-A.jpg"></td>
+    <td>Next connect the A digit output port to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Accumulator 2 is now configured for this step of our setup.  When it receives a pulse on<br>
+P1-A:3 it will then send its contents out the A digit port, connected to D1-A, for the next<br>
+5 addition times.  Now we need to configure accumulator 1 to receive this number 5 times.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Accumulator1.jpg"></td>
+    <td>Be sure that accumulator <b>1</b> is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P1-A3.jpg"></td>
+    <td>Set the input for program 5 to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog5_alpha_0.jpg"></td>
+    <td>Configure program 5 by setting its mode to <b>alpha</b> and<br>
+        its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Rep5_5.jpg"></td>
+    <td>Set the repeat program control for program 5 to <b>5</b></td>
+  </tr>
+</table>
+<p>
+This step is now done.  Go ahead and run what we have so far.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>Switch to the <b>Init</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/ClearButton.jpg"></td>
+    <td>Press the <b>Clear</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/GoButton.jpg"></td>
+    <td>Followed by the <b>Go</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Switch back to the <b>Acc</b> tab</td>
+  </tr>
+</table>
+<p>
+The accumulator display should now be showing 2403
+<p>
+<img src="Images/Acc_disp_2403.jpg">
+<p>
+<p>
+<h3>The Fourth Task</h3>
+<p>
+Now in order to demonstrate how to do subtraction we will now subtract the contents of<br>
+accumulator 1 from accumulator 15.  I will explain later why we are using accumulator 15<br>
+for this step.  Accumulator 15, like all accumulators, will contain zero after reset,<br>
+therefore in this step we will be subracting 2403 from zero to produce a negative number.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Be sure that the <b>Acc</b> tab is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator1.jpg"></td>
+    <td>Be sure that accumulator <b>1</b> is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P1-A3_output_P1-A4.jpg"></td>
+    <td>First we need an output pulse to trigger this step.  connect the<br>
+        output of program 5 to <b>P1-A:4</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO6_input_P1-A4.jpg"></td>
+    <td>We need to send the value from accumulator 1, so connect the<br>
+        input of program 6 to <b>P1-A:4</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog6_S_0.jpg"></td>
+    <td>Configure program 6 to use mode <b>S</b> and set the Clear/Correct<br>
+        switch to <b>0</b></td>
+  </tr>
+</table>
+<p>
+Like mode A that we used in the last step, mode S also causes an accumulator to send its<br>
+value.  When mode S is used the value will be sent out the S digit port instead of the A<br>
+port.  There is an important difference to these two ports.  Port A always sends the exact<br>
+value stored in the accumulator.  Port S on the other hand sends the compliment of the value<br>
+in the accumultor.  so in our case, the accumulator holds +2403, when sending this value out<br>
+the S port it will actually be sent as -2403.  This is how you perform subtraction on the<br>
+ENIAC.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/S_D1-A.jpg"></td>
+    <td>Since we are sending out the S port, we must connect it to a<br>
+        digit tray.  Connect it to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+Accumulator 1 is now all configured for this step.  Now we need to configure accumulator 15
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Accumulator15.jpg"></td>
+    <td>Select accumulator <b>15</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>Turn <b>On</b> the power to this accumulator</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P1-A4.jpg"></td>
+    <td>Connect the input of program 5 to <b>P1-A:4</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog5_alpha_0.jpg"></td>
+    <td>Configure program 5 by setting its mode switch to <b>alpha</b><br>
+        and its Clear/Correct switch to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Alpha_D1-A.jpg"></td>
+    <td>Since program 5 will be listening on the alpha channel, connect<br>
+        it to <b>D1-A</b></td>
+  </tr>
+</table>
+<p>
+The configuration for this task is now complete.  Lets run it and see what we have
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>Switch to the <b>Init</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/ClearButton.jpg"></td>
+    <td>Press the <b>Clear</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/GoButton.jpg"></td>
+    <td>Followed by the <b>Go</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Switch back to the <b>Acc</b> tab</td>
+  </tr>
+</table>
+<p>
+You should get this number below, probably not quite what you were expecting
+<p>
+<img src="Images/Acc_disp_neg_2403.jpg">
+<p>
+This is a good time to talk about how negative numbers are represented in ENIAC.  ENIAC<br>
+shows negative numbers in 10s compliment.  In order to convert the number to normal form<br>
+you must subtract each digit from 9 and then add a final 1.  To show you how this is done<br>
+Lets take the number returned in the last step:
+<p>
+- 9 9 9 9 9 9 7 5 9 7
+<p>
+If you subtract each digit from 9 you get:
+<p>
+- 0 0 0 0 0 0 2 4 0 2
+<p>
+Then add 1:
+<p>
+- 0 0 0 0 0 0 2 4 0 3
+<p>
+If you have a number in normal form and need to convert it to 10s compliment for ENIAC, the<br>
+process is the same.  Lets convert -10 to the form needed by ENIAC.
+<p>
+- 0 0 0 0 0 0 0 0 1 0
+<p>
+Subtract each digit from 9:
+<p>
+- 9 9 9 9 9 9 9 9 8 9
+<p>
+And add 1:
+<p>
+- 9 9 9 9 9 9 9 9 9 0
+<p>
+We now see that -10 is -9999999990 in 10s compliment.
+<p>
+ENIAC uses this 10s compliment for negative numbers everywhere, so you may as well get used<br>
+to looking at them.
+<p>
+<h3>The Last Task</h3>
+<p>
+We are almost done with what we set out to do.  All we need to do now is punch out the results.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Be sure you are on the <b>Acc</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator15.jpg"></td>
+    <td>And accumulator <b>15</b> is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P1-A4_output_P1-A5.jpg"></td>
+    <td>We need one last program pulse.  We will get it from the output<br>
+        of program 5.  Set it to <b>P1-A:5</b></td>
+  </tr>
+</table>
+<p>
+This is all we need to do with the accumulators.  Lets now connect the card punch.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PunchTab.jpg"></td>
+    <td>Start by selecting the <b>Punch</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>Turn the power <b>On</b> to the punch</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>The program controls for the punch are actually located on<br>
+        the Initiating Unit, so select the <b>Init</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PunchIO_input_P1-A5.jpg"></td>
+    <td>Set the program input for the punch to <b>P1-A:5</b></td>
+  </tr>
+</table>
+<p>
+Ok, now run the setup.  Rember, it is <b>Init</b> tab, <b>Clear</b> button, <b>Go</b> button.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PunchTab.jpg"></td>
+    <td>Switch back to the <b>Punch</b> tab</td>
+  </tr>
+</table>
+<p>
+And lets take a look at our output:
+<p>
+<img src="Images/Tutorial1_output1.jpg">
+<p>
+We need to do a little work on the output.  The first thing to notice is that it printed 16<br>
+5 digit numbers.  Remember that accumulators are 10 digits.  The punch actually divides the<br>
+accumulators connected to it into two 5 digit numbers.  So what is appearing is this:
+<p>
++00000+02403 is coming from accumulator 1
+<p>
++00000+00456 is coming from accumulator 2
+<p>
+These two numbers should look pretty familiar.  The next two might be a little more confusing
+<p>
+-00001-02403 is coming from accumulator 15
+<p>
+First why we used accumulator 15 before.  The punch is connected to the following accumulators<br>
+1, 2, 15, 16, 17, 18, 19, and 20.  We need to make sure the values we want to punch are located<br>
+in these registers.
+<p>
+Now the interesting output from accumulator 15.  Before I mentioned that all negative numbers<br>
+on ENIAC are represented in 10s compliment.  When negative numbers appear on cards, wether they<br>
+are cards to be read or cards to be punched they are actually in normal form, not 10s compliment.<br>
+Now, the punch converted the value in accumulator as two separate 5 digit numbers.  Accumulator 15<br>
+currently has - 9 9 9 9 9 9 7 5 9 7, which is taken as two numbers of - 9 9 9 9 9 and - 9 7 5 9 7.<br>
+We showed earlier the conversion of the -7597.  Now use that discussion on the -99999 and you will<br>
+see that it converts to -00001.
+<p>
+The card that was punched is not what we wanted.  We want 3 10-digit numbers.  ENIAC gives us the<br>
+ability modify how the punch works.  These modifications are made on the <b>Print</b> tab.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PrintTab.jpg"></td>
+    <td>Start by selecting the <b>Print</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PrintPanel1.jpg"></td>
+    <td>Select <b>Panel 1</b></td>
+  </tr>
+</table>
+<p>
+This panel (Along with panel 3) consists of switches that allow you to associate print groups<br>
+together.  Each print group that is connected will consist of just 1 sign and when negative is<br>
+converted as a group to normal form.  We need to change the group connections for the accumulators<br>
+we are working with
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/Print12_C.jpg"></td>
+    <td>Accumulator 1 contains print groups 1 and 2, therefore we need<br>
+        to connect these two groups together by setting the 1-2 switch<br>
+        to <b>C</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Print34_C.jpg"></td>
+    <td>Accumulator 2 contains print groups 3 and 4, therefore we need<br>
+        to connect these two groups together by setting the 3-4 switch<br>
+        to <b>C</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Print56_C.jpg"></td>
+    <td>Accumulator 15 contains print groups 5 and 6, therefore we need<br>
+        to connect these two groups together by setting the 5-6 switch<br>
+        to <b>C</b></td>
+  </tr>
+</table>
+<p>
+All other switches on this panel and panel 3 need to be set at <b>0</b>
+<p>
+Go ahead and run the setup and take a look at the output
+<p>
+<img src="Images/Tutorial1_output2.jpg">
+<p>
+Now the three accumulators we are interested in all printed correctly as 10 digits.  Also note<br>
+that the -1 is gone, once groups 5 and 6 were connected all 10 digits were taken into account<br>
+when the punch converted the number to normal form.
+<p>
+One last thing we will do, there are numbers being printed from the other accumulators that we<br>
+really do not need.  Lets get rid of the extra numbers.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PrintTab.jpg"></td>
+    <td>Start by selecting the <b>Print</b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PrintPanel2.jpg"></td>
+    <td>Select <b>Panel 2</b></td>
+  </tr>
+</table>
+<p>
+We want only groups 1 through 6 to be set to print, all other groups should be set to <b>Off</b>
+<p>
+<img src="Images/PrintGroups1_2_3_4_5_6.jpg">
+<p>
+And now run the setup
+<p>
+<img src="Images/Tutorial1_output3.jpg">
+<p>
+If you got this output, congratulaions, you have built your first ENIAC setup and had it run<br>
+correctly.  
+<p>
+This was a long tutorial but you should have learned a lot from it!  Good job!
+<p>
+<b>Learned in this tutorial</b>
+<p>
+<ul>
+  <li>How to get a constant from the Constant Transmitter
+  <li>How to add numbers to an accumulator
+  <li>How to chain program steps together
+  <li>How to multiply a number by a single digit number
+  <li>How to subtract one number from another
+  <li>How to output values to the card punch
+  <li>How to configure the punch
+</ul>
+
+</body>
+</html>

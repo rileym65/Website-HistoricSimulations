@@ -1,0 +1,215 @@
+<html>
+<head>
+  <title>Tutorial: Using the Master Programmer to control a fixed loop</title>
+</head>
+
+<body bgcolor=white text=black>
+
+<h3><b>Using the Master Programmer to control a fixed loop</b></h3>
+<p>
+<p>In this tutorial we will be creating a setup to count from 1 to 10, using the<br>
+Master Programmer as the means to control the loop.  Be sure to begin this turorial<br>
+from a blank setup.</p>
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>First be sure you have the <b>Init</b> tab slected on the simulator</td>
+  </tr>
+  <tr>
+    <td><img src="Images/InitPulse_P1-A1.jpg"></td>
+    <td>Connect the Init Pulse to <b>P1-A:1</b></td>
+  </tr>
+  <tr>
+    <td><img src="Images/MasterTab.jpg"></td>
+    <td>Now select the Master Programmer by selecting the <b>Master</b> tab</td>
+  </tr>
+  <tr>
+    <td><img src="Images/MasterPanel1.jpg"></td>
+    <td>Be sure that <b>panel 1</b> is selected</td>
+  </tr>
+</table>
+<p>
+The Master Programmer consists of 10 6-stage steppers spread across two panels, 5 steppers<br>
+per panel.  There are also 20 decades used by the Master Programmer, 10 decades per panel.<br>
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>Be sure that the power to the panel is <b>on</b></td>
+  </tr>
+</table>
+<p>
+We will be using stepper E to control our loop.  The pulse P1-A:1 will be the beginning of<br>
+each loop.  This is the pulse that the <b>Go</b> button will produce when pressed.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/StepperEIP1-A1.jpg"></td>
+    <td>Set the input of Stepper E to <b>P1-A:1</b></td>
+  </tr>
+</table>
+<p>
+With this connection, each time that Stepper E receives a pulse on P1-A:1 it will emit a<br>
+pulse on the output associated with the current stage, which after reset is stage 1.  The<br>
+output pulse from the stepper will occur in the addition time following the cycle that<br>
+the input receives a pulse.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/StepperEO1P1-A2.jpg"></td>
+    <td>Connect the output 1 of Stepper E to <b>P1-A:2</b></td>
+  </tr>
+</table>
+<p>
+Each time that the input of a stepper is pulsed, the decades associated with the stepper<br>
+will be incremented.  Once the terminal value is reached the stepper will change to the<br>
+next stage.  Now we need to setup the terminal count for stage 1 of stepper E.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/MasterDE-E.jpg"></td>
+    <td>We need 2 decades for our terminal count.  Normally stepper E has only 1 decade<br>
+        attached to it, but the next decade to the left can be switched between stepper D<br>
+        and stepper E.  Set the decade select switch to <b>E</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/MasterEStage1-10.jpg"></td>
+    <td>Now you can set the terminal count of <b>10</b> on the select switches for stage 1<br>
+        on stepper E</td>
+  </tr>
+</table>
+<p>
+At this point the Master Programmer is all setup for controlling our loop.  Now we just<br>
+need to setup what happens during the loop.  Stepper E has already been set to output a<br>
+pulse on P1-A:2, so we just need to use that pulse to control what happens next.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/AccTab.jpg"></td>
+    <td>Select the Accumulator (<b>Acc</b>) tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Accumulator1.jpg"></td>
+    <td>Be sure that Accumulator <b>1</b> is selected</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>Make sure the power to this accumulator is <b>on</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_Input_P1-A2.jpg"></td>
+    <td>Set this accumulator program 5 to look for a pulse on <b>P1-A:2</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Acc_Prog5_alpha_C.jpg"></td>
+    <td>For this program all we want to do is use the auto-increment<br>
+        function by setting the program to a recieve mode, in this case<br>
+        <b>alpha</b> and then setting the Clear/Correct switch to <b>C</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Rep5_1.jpg"></td>
+    <td>We only want to count by 1 each time, so make sure the repeat switch<br>
+        is set to <b>1</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/IO5_input_P1-A2_output_P1_A3.jpg"></td>
+    <td>And lastly connect the output side of IO5 to <b>P1-A:3</b></td>
+  </tr>
+</table>
+<p>
+Our accumulator is now all setup.  It will be listening for a pulse on P1-A:2, which<br>
+when received will trigger program 5 which will listen for a number on channel alpha,<br>
+which is unconnected.  With the Clear/Correct switch set to C 1 will be added to the<br>
+accumulator at the end of the program.  Once program 5 completes a pulse will be sent<br>
+out P1-A:3
+<p>
+We will use the pulse on P1-A:3 to trigger the card punch.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PunchTab.jpg"></td>
+    <td>Select the card punch tab <b>Punch</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PowerOn.jpg"></td>
+    <td>And turn <b>on</b> its power</b></td>
+  </tr>
+</table>
+<p>
+Now we need to configure the punch for the job.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/PrintTab.jpg"></td>
+    <td>Select the card print control tab <b>Print</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PrintPanel1.jpg"></td>
+    <td>Select <b>panel 1</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/Print12_C.jpg"></td>
+    <td>Set the combine switch for groups 1-2 to <b>C</b><br>
+        All the other switches should be set to <b>0</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PrintPanel2.jpg"></td>
+    <td>Select <b>panel 2</b></td>
+  </tr>
+</table>
+<p>
+Panel 2 selects which groups get punched.  We only want to punch groups 1 and 2, set<br>
+all other print groups to <b>Off</b>
+<p>
+<img src="Images/PrintGroups1_2.jpg">
+<p>
+We are almost done.  Now we need to add the punch step into our setup.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/InitTab.jpg"></td>
+    <td>Return back to the <b>Init<b> tab</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PunchIO_input_P1-A3.jpg"></td>
+    <td>Connect the pulse input of the Punch to <b>P1-A:3</b></td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PunchIO_input_P1-A3_output_P1-A1.jpg"></td>
+    <td>Connect the pulse output of the Punch to <b>P1-A:1</b></td>
+  </tr>
+</table>
+<p>
+The card punch will be triggered when Accumulator 1 finishes program 5.<br>
+After the punch has punched a card it will output the P1-A:1 pulse, which<br>
+is the input to Stepper E of the Master Programmer, initiating the next<br>
+loop of the setup.
+<p>
+Now to run the setup.
+<p>
+<table width="100%" cols=2 border=0>
+  <tr>
+    <td width=200><img src="Images/ClearButton.jpg"></td>
+    <td>You should already be on the <b>Init</b> tab, so just press the<br>
+        <b>Clear</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/GoButton.jpg"></td>
+    <td>Followed by the <b>Go</b> button</td>
+  </tr>
+  <tr>
+    <td width=200><img src="Images/PunchTab.jpg"></td>
+    <td>Switch to the <b>Punch</b> tab</td>
+  </tr>
+</table>
+<p>
+If you followed all the steps correctly you should get this output:
+<p>
+<img src="Images/Tutorial2Output.jpg">
+<p>
+When the setup finishes, stepper E will be at stage 2.  If there was more work<br>
+to be done at this point, you could use the <b>O2</b> output from stepper E to<br>
+initiate the next part of your setup.
+</body>
+</html>

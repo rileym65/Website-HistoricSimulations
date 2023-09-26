@@ -1,0 +1,143 @@
+<html>
+<head>
+  <title>ENIAC</title>
+</head>
+
+<body bgcolor=white text=black>
+
+<h2>ENIAC</h2>
+<p>
+<h3>Electronic Numerical Integrator And Computer</h3>
+<p>
+ENIAC was completed in February of 1946 and is widely considered to be the first<br>
+general purpose electronic computer.  Although there were numerous computing machines<br>
+that predate ENIAC, most of them were mechanical or electro-mechanical in nature and<br>
+none of them were considered general purpose.
+<p>
+The construction of ENIAC used 17,468 vacuum tubes, 7,200 diodes, 1,500 relays,<br>
+70,000 resisters, 10,000 capicitors and some 5 million solder joints.  ENIAC weighed<br>
+approximately 27 tons, took up around 1,800 square feet of floor space and consumed<br>
+about 150kw of power to run.
+<p>
+ENIAC consisted of 32 units spread accross 40 panels and was programmed by setting<br>
+its thousands of switches spread across its units and then cabling its units together<br>
+to perform complex calculations
+<p>
+
+<h3>The Simulator</h3>
+<p>
+This ENIAC simulation simulates the majority of the original ENIAC machine.  The following
+units are simulated:
+<p>
+<ul>
+  <li>Initiating Unit
+  <li>Cycling Unit
+  <li>Master Programmer
+  <li>20 Accumulators
+  <li>High Speed Multiplier
+  <li>Divider/Square Rooter
+  <li>3 Function Tables
+  <li>Constant Transmitter
+  <li>Card Reader
+  <li>Card Punch
+</ul>
+<p>
+All units are 100% simulated with the execption of the card reader and card punch.
+In the case of the card reader and punch the plugboard<br> associated with these two
+units has not yet been simulated.  Once I have them fully figured out they will
+be implemented in a future version.
+<p>
+<h3>Download</h3>
+<p>
+<a href="eniac.zip">Download the ENIAC simulator</a>
+<p>
+<b>Note:</b>  This program requires .net 4.0 framework to be installed
+<p>
+
+<h3>Additional Programs</h3>
+<p>
+<h4>Mandelbrot Set Plotter</h4>
+<p>
+This setup allows the ENIAC to plot the Mandelbrot set on the card punch.  Initially<br>
+the initial setup plots the entire set.  It is possible to plot a subset by changing<br>
+the startup and increment values.  A text file is included to help explain how this<br>
+setup functions.
+<p>
+<a href="mandelbrot.zip">Download</a>
+<p>
+
+<h4>PI</h4>
+<p>
+This is a simple setup to compute the value of PI.  It does this using the 1-1/3+1/5...<br>
+method.  This is not the most efficient way to compute PI, but is simpler to understand<br>
+<p>
+<a href="pi.zip">Download</a>
+<p>
+
+<h4>Logic</h4>
+<p>
+ENIAC was originally programed by setting the thousands of switches on its various units<br>
+and then cabling them together to perform sequences.  Some time in 1948 ENIAC was <br>
+permanently wired to act more like a stored-program computer.  After this wiring ENIAC<br>
+executed programs off of its function tables.  Now programming took mere hours instead<br>
+of weeks.  I have very little information on how this was done but was intrigued by<br>
+this change.  I decided to attempt to create such a stored-program computer using only<br>
+the original ENIAC hardware.  This setup is my attempt.
+<p>
+<a href="logic.zip">Download</a>
+<p>
+
+<h4>99 Bottles</h4>
+<p>
+I saw on a website (<a href="http://www.99-bottles-of-beer.net/"> http://www.99-bottles-of-beer.net/</a>)
+a program for doing the 99 bottles<br>
+of bear song on the ENIAC.  The program was written in an assembly language which means<br>
+it was not for the original hardware-programming model, and after examination of the<br>
+program and what I do know of the stored-program concept of the modifified ENIAC, I<br>
+am not quite sure this program was for the actual ENIAC.  However, I was intrigued<br>
+by the method the guy used and so I produced this setup to punch out the lyrics of<br>
+the song.  Since ENIAC only worked in numbers the ASCII numbers are punched onto <br>
+cards to output the song.  A sample c program is included that can read the punch card<br>
+output and convert the codes back to ascii.
+<p>
+<a href="99bottles.zip">Download</a>
+<p>
+<p>
+
+<h3>Tutorials</h3>
+<p>
+<a href="./Tutorials/tutorial1.html">Tutorial 1: Getting started with ENIAC</a>
+<p>
+<a href="./Tutorials/tutorial2.html">Tutorial 2: Using the Master Programmer to control a fixed loop</a>
+<p>
+<a href="./Tutorials/tutorial3.html">Tutorial 3: Variable loops</a>
+<p>
+<a href="./Tutorials/tutorial4.html">Tutorial 4: Reading values from the Funtion Tables</a>
+<p>
+<a href="./Tutorials/tutorial5.html">Tutorial 5: Setting up the High-Speed Multiplier</a>
+<p>
+<a href="./Tutorials/tutorial6.html">Tutorial 6: Using the High-Speed Multiplier</a>
+<p>
+<hr>
+<a href="../index.html">Back to main page</a>
+<hr>
+<p>
+<h3>Screenshots</h3>
+<p><img src="Images/eniac_init.jpg">
+<p><img src="Images/eniac_cycle.jpg">
+<p><img src="Images/eniac_master.jpg">
+<p><img src="Images/eniac_accumulator.jpg">
+<p><img src="Images/eniac_multiplier.jpg">
+<p><img src="Images/eniac_divider.jpg">
+<p><img src="Images/eniac_function1.jpg">
+<p><img src="Images/eniac_function2.jpg">
+<p><img src="Images/eniac_portfunct.jpg">
+<p><img src="Images/eniac_constant1.jpg">
+<p><img src="Images/eniac_constant2.jpg">
+<p><img src="Images/eniac_print.jpg">
+<p><img src="Images/eniac_reader.jpg">
+<p><img src="Images/eniac_punch.jpg">
+<p><img src="Images/eniac_filters.jpg">
+<p><img src="Images/eniac_debug.jpg">
+</body>
+</html>
